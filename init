@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DIR="${1:-.}"
+SOPS_VERSION="${ARGOCD_ENV_SOPS_VERSION:-$LATEST_SOPS_VERSION}"
+
+for i in $(find $DIR -name "*.enc.*"); do
+  sops-$SOPS_VERSION -d $i > $(sed 's/enc/dec/' <<< $i)
+done
+
+for d in $(grep "\.\+/" $DIR/kustomization.y*ml 2>/dev/null | sed -E 's/\s*-\s*//'); do
+  if [ -d "$d" ]; then
+    init $d
+  fi
+done

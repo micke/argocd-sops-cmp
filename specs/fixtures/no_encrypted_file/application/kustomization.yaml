@@ -1,0 +1,7 @@
+resources:
+- deployments.yaml
+
+patches:
+- path: ../patches/revision_history_limit.yaml
+  target:
+    kind: Deployment

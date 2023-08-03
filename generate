@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+KUSTOMIZE_VERSION="${ARGOCD_ENV_KUSTOMIZE_VERSION:-$LATEST_KUSTOMIZE_VERSION}"
+
+case $KUSTOMIZE_VERSION in
+  3.2.*)
+    FLAGS="--load_restrictor none"
+    ;;
+  *)
+    FLAGS="--load-restrictor LoadRestrictionsNone"
+    ;;
+esac
+
+kustomize-$KUSTOMIZE_VERSION build $FLAGS

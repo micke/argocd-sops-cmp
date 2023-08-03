@@ -1,0 +1,23 @@
+#!/bin/bash
+
+DIR="${1:-.}"
+
+check() {
+  if [[ -n $(find $1 -name "*.enc.*") ]]; then
+    echo true
+  else
+    for d in $(grep "\.\+/" $1/kustomization.y*ml 2>/dev/null | sed -E 's/\s*-\s*//'); do
+      if [ -d "$d" ]; then
+        check $d
+      fi
+    done
+  fi
+}
+
+if [[ -z $(check $DIR) ]]; then
+  echo "No encrypted files found"
+  exit 1
+fi
+
+echo "$ARGOCD_APP_NAME is supported by sops cmp"
+exit 0

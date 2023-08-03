@@ -1,0 +1,5 @@
+kind: Deployment
+metadata:
+  name: not-important
+spec:
+  revisionHistoryLimit: 0

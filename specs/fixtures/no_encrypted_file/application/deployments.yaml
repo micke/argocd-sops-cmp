@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: overprovisioning
+  namespace: kube-system
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: reserve-resources
+        image: k8s.gcr.io/pause

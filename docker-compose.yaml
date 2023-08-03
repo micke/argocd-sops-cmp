@@ -1,0 +1,11 @@
+version: '3'
+services:
+  cmp:
+    platform: linux/amd64
+    build:
+      context: .
+    volumes:
+      - ./specs/tmp:/tmp
+      - ./specs/fixtures/age:/age
+    environment:
+      - SOPS_AGE_KEY_FILE=/age/key.txt

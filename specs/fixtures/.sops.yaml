@@ -1,0 +1,4 @@
+creation_rules:
+  - path_regex: .*
+    age: age10jkz8d4u2y2aq8eelw0jcg56fp9kfd63c06952uf94hnyd5jd3zqry2rqq
+    age_key_file: fixtures/age/key.txt

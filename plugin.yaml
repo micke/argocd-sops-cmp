@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ConfigManagementPlugin
+metadata:
+  name: cmp-plugin
+spec:
+  version: v1.0
+  init:
+    command: [sh, -c, init]
+  generate:
+    command: [sh, -c, generate]
+  discover:
+    find:
+      command: [sh, -c, discover]

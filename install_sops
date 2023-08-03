@@ -1,0 +1,7 @@
+#!/bin/bash
+set -eux -o pipefail
+
+SOPS_VERSION=$1
+
+curl -f -o /usr/local/bin/sops-$SOPS_VERSION -L "https://github.com/getsops/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux"
+chmod +x /usr/local/bin/sops-$SOPS_VERSION
