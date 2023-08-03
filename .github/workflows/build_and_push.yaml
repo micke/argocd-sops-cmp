@@ -8,9 +8,7 @@ env:
 
 jobs:
   setup-build-publish-deploy:
-    permissions:
-      contents: "read"
-      id-token: "write"
+    permissions: write-all
     name: Setup, Build, Push
     runs-on: ubuntu-latest
 
