@@ -32,7 +32,7 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Build the hello-docker Docker image
+    - name: Build the Docker image
       run: |
          docker build . -t ghcr.io/micke/argocd-sops-cmp:$GITHUB_SHA
          docker push ghcr.io/micke/argocd-sops-cmp:$GITHUB_SHA
