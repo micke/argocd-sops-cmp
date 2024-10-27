@@ -1,0 +1,13 @@
+#!/bin/bash
+set -eux -o pipefail
+
+HELM_VERSION=$1
+
+DL=/tmp/helm-${HELM_VERSION}.tar.gz
+URL=https://get.helm.sh/helm-v$HELM_VERSION-linux-amd64.tar.gz
+
+[ -e $DL ] || curl -sLf --retry 3 -o $DL $URL
+tar -C /tmp -xf $DL
+mv /tmp/linux-amd64/helm /usr/local/bin/helm-${HELM_VERSION}
+rm $DL
+chmod +x /usr/local/bin/helm-${HELM_VERSION}

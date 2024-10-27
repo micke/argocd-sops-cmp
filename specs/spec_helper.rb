@@ -7,7 +7,7 @@ require "open3"
 AmazingPrint.pry!
 
 def setup_file_structure(base_path)
-  path = "tmp/#{SecureRandom.uuid}"
+  path = "specstmp/#{SecureRandom.uuid}"
 
   FileUtils.cd(__dir__) do
     FileUtils.cp_r("fixtures/#{base_path}", path)
@@ -16,5 +16,5 @@ def setup_file_structure(base_path)
     yield path.dup
   end
 ensure
-  FileUtils.remove_entry(File.join(__dir__, path))
+  FileUtils.remove_entry(File.join(__dir__, path), true)
 end

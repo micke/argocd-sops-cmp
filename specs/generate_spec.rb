@@ -55,7 +55,7 @@ spec:
   end
 
   context "requesting a supported kustomize version" do
-    let(:env) { "-e ARGOCD_ENV_KUSTOMIZE_VERSION=5.0.3" }
+    let(:env) { "-e ARGOCD_ENV_KUSTOMIZE_VERSION=5.4.3" }
 
     it "returns zero exit code and outputs the manifest" do
       setup_file_structure("no_encrypted_file") do |tmpdir|
@@ -69,13 +69,40 @@ spec:
     end
   end
 
+  context "building a kustomize with helm manifest" do
+    let(:env) { "" }
+    let(:successful_output) { <<-YAML.chomp }
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/instance: hello-world
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: hello-world
+    app.kubernetes.io/version: 1.16.0
+    helm.sh/chart: hello-world-0.1.0
+  name: hello-world
+    YAML
+
+    it "returns zero exit code and outputs the manifest", :aggregate_failures do
+      setup_file_structure("kustomize_with_helm") do |tmpdir|
+        working_directory = File.join(tmpdir, "application")
+        stdout, stderr, status = run(working_directory, env)
+
+        expect(status).to eq(0)
+        expect(stderr).to be_empty
+        expect(stdout).to include(successful_output)
+      end
+    end
+  end
+
   context "building a broken manifest" do
     let(:env) { "" }
 
     it "returns non-zero exit code and outputs a error message" do
       setup_file_structure("broken_manifest") do |tmpdir|
         working_directory = File.join(tmpdir, "application")
-        _stdout, stderr, status = run(working_directory, env)
+        stdout, stderr, status = run(working_directory, env)
 
         expect(status).not_to eq(0)
         expect(stderr).to include("err='accumulating resources from 'deployments.yaml'")

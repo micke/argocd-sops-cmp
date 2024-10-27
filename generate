@@ -3,5 +3,8 @@
 set -e
 
 KUSTOMIZE_VERSION="${ARGOCD_ENV_KUSTOMIZE_VERSION:-$LATEST_KUSTOMIZE_VERSION}"
+HELM_VERSION="${ARGOCD_ENV_HELM_VERSION:-$LATEST_HELM_VERSION}"
 
-kustomize-$KUSTOMIZE_VERSION build --load-restrictor LoadRestrictionsNone
+FLAGS="--load-restrictor LoadRestrictionsNone --enable-helm --helm-command helm-$HELM_VERSION"
+
+kustomize-$KUSTOMIZE_VERSION build $FLAGS

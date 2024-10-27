@@ -1,11 +1,13 @@
-version: '3'
 services:
   cmp:
     platform: linux/amd64
     build:
       context: .
     volumes:
-      - ./specs/tmp:/tmp
+      - ./specs/specstmp:/specstmp
       - ./specs/fixtures/age:/age
+      - ./check_plugin_compatability:/bin/check_plugin_compatability
+      - ./apodecrypt:/bin/apodecrypt
+      - ./apogenerate:/bin/apogenerate
     environment:
       - SOPS_AGE_KEY_FILE=/age/key.txt

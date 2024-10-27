@@ -12,15 +12,20 @@ RUN apt-get update -y && \
 
 ADD install_kustomize /usr/bin
 ADD install_sops /usr/bin
+ADD install_helm /usr/bin
 
 # Install kustomize
-RUN install_kustomize 5.1.1
-RUN install_kustomize 5.0.3
-ENV LATEST_KUSTOMIZE_VERSION=5.1.1
+RUN install_kustomize 5.4.3
+RUN install_kustomize 5.5.0
+ENV LATEST_KUSTOMIZE_VERSION=5.5.0
 
 # Install sops
-RUN install_sops 3.7.3
-ENV LATEST_SOPS_VERSION=3.7.3
+RUN install_sops 3.9.1
+ENV LATEST_SOPS_VERSION=3.9.1
+
+# Install helm
+RUN install_helm 3.16.2
+ENV LATEST_HELM_VERSION=3.16.2
 
 ADD init /usr/bin
 ADD generate /usr/bin
