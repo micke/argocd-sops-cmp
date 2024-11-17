@@ -27,6 +27,17 @@ describe "init" do
     end
   end
 
+  context "encrypted_file_in_shared_folder" do
+    it "decrypts the encrypted files" do
+      setup_file_structure("encrypted_file_in_shared_folder") do |tmpdir|
+        run(File.join(tmpdir, "application"))
+        decrypted_content = File.read(File.join(tmpdir, "shared", "foo.dec.yaml")).chomp
+
+        expect(decrypted_content).to eq("secret: The earth is round")
+      end
+    end
+  end
+
   context "encrypted_file_in_shared_resource" do
     it "decrypts the encrypted files" do
       setup_file_structure("encrypted_file_in_shared_resource") do |tmpdir|

@@ -3,10 +3,19 @@
 DIR="${1:-.}"
 SOPS_VERSION="${ARGOCD_ENV_SOPS_VERSION:-$LATEST_SOPS_VERSION}"
 
+# Decrypt all files in the directory
 for i in $(find $DIR -name "*.enc.*"); do
-  sops-$SOPS_VERSION -d $i > $(sed 's/enc/dec/' <<< $i)
+  sops-$SOPS_VERSION --output $(sed 's/enc/dec/' <<< $i) -d $i
 done
 
+# Find references to encrypted files in the kustomization file
+# and decrypt them
+for f in $(grep "\.\+/.*\.dec\..*" $DIR/kustomization.y*ml 2>/dev/null | sed -E 's/\s*-\s*//'); do
+  sops-$SOPS_VERSION --output $DIR/$f -d $(sed 's/dec/enc/' <<< $DIR/$f)
+done
+
+# Find references to directories above the application directory
+# and decrypt them
 for d in $(grep "\.\+/" $DIR/kustomization.y*ml 2>/dev/null | sed -E 's/\s*-\s*//'); do
   if [ -d "$d" ]; then
     init $d

@@ -7,7 +7,7 @@ require "open3"
 AmazingPrint.pry!
 
 def setup_file_structure(base_path)
-  path = "specstmp/#{SecureRandom.uuid}"
+  path = "specstmp/#{base_path}-#{SecureRandom.uuid}"
 
   FileUtils.cd(__dir__) do
     FileUtils.cp_r("fixtures/#{base_path}", path)

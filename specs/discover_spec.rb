@@ -10,6 +10,7 @@ describe "discover" do
       encrypted_file_in_folder
       encrypted_file_in_subfolder
       encrypted_file_in_shared_resource
+      encrypted_file_in_shared_folder
       encrypted_file_in_shared_resource_of_shared_resource
     ].each do |base_path|
       context base_path do
@@ -18,7 +19,7 @@ describe "discover" do
             output = run(File.join(tmpdir, "application"))
 
             expect($?.exitstatus).to eq(0)
-            expect(output).to_not be_empty
+            expect(output).to include("is supported")
           end
         end
       end

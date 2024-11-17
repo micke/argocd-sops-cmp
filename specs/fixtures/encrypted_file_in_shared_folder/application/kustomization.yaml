@@ -1,0 +1,4 @@
+secretGenerator:
+  - name: oauth2-proxy
+    envs:
+      - ../shared/foo.dec.yaml
